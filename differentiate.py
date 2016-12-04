@@ -6,7 +6,7 @@ def varize(function):
     @wraps(function)
     def op(self, other):
         if isinstance(other, int):
-            other = Variable(str(val), val, True)
+            other = Variable(str(other), other, True)
         return function(self, other)
     return op
 
