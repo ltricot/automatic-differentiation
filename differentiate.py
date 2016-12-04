@@ -1,4 +1,14 @@
+from functools import wraps
 import numpy as np
+
+
+def varize(function):
+    @wraps(function)
+    def op(self, other):
+        if isinstance(other, int):
+            other = Variable(str(val), val, True)
+        return function(self, other)
+    return op
 
 
 class Variable:
@@ -19,17 +29,21 @@ class Variable:
     def __str__(self):
         return self.name
 
+    @varize
     def __add__(self, other):
         return Add(self, other, name='({} + {})'.format(self.name, other.name))
 
+    @varize
     def __sub__(self, other):
         return Add(self,
             other * Variable(name='-1', val=-1, fixed=True),
             name='({} - {})'.format(self.name, other.name))
 
+    @varize
     def __mul__(self, other):
         return Mul(self, other, name='({} * {})'.format(self.name, other.name))
 
+    @varize
     def __truediv__(self, other):
         return Div(self, other, name='({} / {})'.format(self.name, other.name))
 
