@@ -12,7 +12,7 @@ This algorithm views an expression as a tree. Each leaf-node is a number or a va
 other nodes are values resulting of the basic operation (+-/\*) made on each of their two sub-nodes.  
 For example:  
 
-![treeExample](https://github.com/ltricot/automatic-differentiation/blob/master/tree.png)
+<img src="https://github.com/ltricot/automatic-differentiation/blob/master/tree.png" alt="treeExample" style="width: 50px;"/>
 
 simplification
 --------------
