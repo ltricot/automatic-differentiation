@@ -11,6 +11,7 @@ differentiation
 This algorithm views an expression as a tree. Each leaf-node is a number or a variable (x), and all the
 other nodes are values resulting of the basic operation (+-/\*) made on each of their two sub-nodes.  
 For example:  
+
 ![treeExample](https://github.com/ltricot/automatic-differentiation/blob/master/tree.png)
 
 simplification
