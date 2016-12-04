@@ -1,3 +1,4 @@
+from weakref import WeakValueDictionary
 from functools import wraps
 import numpy as np
 
@@ -13,10 +14,18 @@ def varize(function):
 
 class Variable:
 
+    nametovar = WeakValueDictionary()
+
     def __init__(self, name, val=None, fixed=False):
+        self.__class__.nametovar[name] = self
         self.fixed = fixed
         self.name = name
         self.val = val
+
+    def __call__(self, varvalues):
+        for k, v in varvalues.items():
+            self.__class__.nametovar[k].val = v
+        return self.forward()
 
     def forward(self):
         return self.val
