@@ -3,7 +3,7 @@ Automatic Differentiation
 
 **This is a differentiation algorithm created by Loan Tricot and Simon Dupouy in Pyhton 3.**
 
-*differentiate.py* differentiates any expression.
+*differentiate.py* differentiates any expression.  
 *simplify.py* does *very* basic simplifications. It is used to simplify a bit the differentiated expressions.
 
 differentiation
@@ -28,5 +28,5 @@ The algorithm for the moment makes the following simplifications:
 - x / x = 1
 
 This program will be extended to develop and further simplify expressions, as well as work with power
-notations (x^a).
+notations (x^a).  
 We will also try to implement it using regular expressions (RegExp).
