@@ -1,7 +1,7 @@
 Automatic Differentiation
 =========================
 
-**This is a differentiation algorithm created by Loan Tricot and Simon Dupouy in Pyhton 3.**
+**This is a differentiation algorithm created by Loan Tricot and Simon Dupouy in Python 3.**
 
 *differentiate.py* differentiates any expression.  
 *simplify.py* does *very* basic simplifications. It is used to simplify a bit the differentiated expressions.
@@ -9,9 +9,9 @@ Automatic Differentiation
 differentiation
 ---------------
 This algorithm views an expression as a tree. Each leaf-node is a number or a variable (x), and all the
-other nodes are values resulting of the basic operation (+-/\*) made on each of their two sub-nodes.
-For example:
-![treeExample]()
+other nodes are values resulting of the basic operation (+-/\*) made on each of their two sub-nodes.  
+For example:  
+![treeExample](https://github.com/ltricot/automatic-differentiation/blob/master/tree.png)
 
 simplification
 --------------
