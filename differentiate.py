@@ -64,15 +64,29 @@ class Op(Variable):
         self.a, self.b = a, b
 
 
+class MonoOp(Variable):
+
+    def __init__(self, a, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.a = a
+
+
+def checkself(function):
+    @wraps(function)
+    def backward(self, name):
+        v = super().backward(name)
+        if v.val: return v
+        return function(self, name)
+    return backward
+
+
 class Add(Op):
 
     def forward(self):
         return self.a.forward() + self.b.forward()
 
+    @checkself
     def backward(self, name):
-        v = super().backward(name)
-        if v.val:
-            return v
         return self.a.backward(name) + self.b.backward(name)
 
 
@@ -81,10 +95,8 @@ class Mul(Op):
     def forward(self):
         return self.a.forward() * self.b.forward()
 
+    @checkself
     def backward(self, name):
-        v = super().backward(name)
-        if v.val:
-            return v
         return self.b * self.a.backward(name) + self.a * self.b.backward(name)
 
 
@@ -93,6 +105,37 @@ class Div(Op):
     def forward(self):
         return self.a.forward() / self.b.forward()
 
+    @checkself
     def backward(self, name):
         num = self.b * self.a.backward(name) - self.a * self.b.backward(name)
         return num / (self.b * self.b)
+
+
+class Heaviside(MonoOp):
+
+    def forward(self):
+        return (self.a.forward() > 0) * 1
+
+    @checkself
+    def backward(self, name): # this is not differentiable in 0, but whatever
+        return Variable(name='0', val=0, fixed=True)
+
+
+class ReLU(MonoOp):
+
+    def forward(self):
+        return np.maximum(self.a.forward(), 0)
+
+    @checkself
+    def backward(self, name):
+        return Heaviside(self.a) * self.a.backward(name)
+
+
+class Log(MonoOp):
+
+    def forward(self):
+        return np.log(self.a.forward())
+
+    @checkself
+    def backward(self, name):
+        return (Variable(name='1', val=1, fixed=True) / self.a) * self.a.backward()
